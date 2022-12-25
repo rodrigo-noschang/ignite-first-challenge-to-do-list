@@ -26,13 +26,6 @@ const Home = () => {
         setTasks(updatedTasks);
     }
 
-    const sortTasksByCompletion = () => {
-        const newArray = [...tasks];
-        newArray.sort((a, b) => Number(a.completed) - Number(b.completed));
-        
-        return newArray;
-    }
-
     const togleTaskCompletion = (taskId: number) => {
         const selectedTask = tasks.find(task => task.id === taskId );
 
@@ -41,9 +34,8 @@ const Home = () => {
         const currentTaskState = selectedTask.completed;
         
         selectedTask.completed = !currentTaskState
-        const sortedTasks = sortTasksByCompletion();
 
-        setTasks(sortedTasks);
+        setTasks([...tasks]);
     }
 
     return (
