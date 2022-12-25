@@ -9,10 +9,12 @@ import { styles } from "./style"
 
 interface Props {
     task: TaskType,
-    handleRemoveTask: (idToRemove: number) => void
+    handleRemoveTask: (idToRemove: number) => void,
+    togleTaskCompletion: (taskid: number) => void
 }
 
-const Task = ({ task, handleRemoveTask }: Props) => {
+const Task = ({ task, handleRemoveTask, togleTaskCompletion }: Props) => {
+    
     return (
         <View style = {styles.taskContainer}>
             <BouncyCheckbox 
@@ -28,6 +30,7 @@ const Task = ({ task, handleRemoveTask }: Props) => {
                 textStyle = {{
                     color: task.completed ? '#808080' : '#F2F2F2'
                 }}
+                onPress = { () => togleTaskCompletion(task.id) }
             />
 
             <TouchableWithoutFeedback onPress = {() => handleRemoveTask(task.id)}>

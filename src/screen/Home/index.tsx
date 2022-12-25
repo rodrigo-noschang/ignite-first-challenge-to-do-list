@@ -16,11 +16,34 @@ export type TaskType = {
 
 const Home = () => {
     const [tasks, setTasks] = useState<TaskType[]>([]);
+    const completedTasks = tasks.reduce((acc, curr) => {
+        return curr.completed ? acc + 1 : acc + 0
+    }, 0);
 
     const handleRemoveTask = (idToRemove: number) => {
         const updatedTasks = tasks.filter(task => task.id !== idToRemove)
 
         setTasks(updatedTasks);
+    }
+
+    const sortTasksByCompletion = () => {
+        const newArray = [...tasks];
+        newArray.sort((a, b) => Number(a.completed) - Number(b.completed));
+        
+        return newArray;
+    }
+
+    const togleTaskCompletion = (taskId: number) => {
+        const selectedTask = tasks.find(task => task.id === taskId );
+
+        if (!selectedTask) return;
+        
+        const currentTaskState = selectedTask.completed;
+        
+        selectedTask.completed = !currentTaskState
+        const sortedTasks = sortTasksByCompletion();
+
+        setTasks(sortedTasks);
     }
 
     return (
@@ -37,7 +60,7 @@ const Home = () => {
 
                 <TaskCounter 
                     label = 'Concluídas' 
-                    value = {2} 
+                    value = {completedTasks} 
                     color = '#8284FA'
                 />
             </View>
@@ -49,6 +72,7 @@ const Home = () => {
                             key = {index} 
                             task = {task}
                             handleRemoveTask = {handleRemoveTask}
+                            togleTaskCompletion = {togleTaskCompletion}
                         />
                     )}
                 </ScrollView>
