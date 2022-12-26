@@ -1,10 +1,15 @@
-import { View, TouchableWithoutFeedback } from "react-native"
-import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { View, 
+    TouchableWithoutFeedback,
+    Text, 
+    Image } from "react-native"
+// import BouncyCheckbox from "react-native-bouncy-checkbox";
 import Icon from 'react-native-vector-icons/EvilIcons';
+import IconFA from 'react-native-vector-icons/FontAwesome';
 
 import { TaskType } from "../../screen/Home";
 
 import { styles } from "./style"
+
 
 
 interface Props {
@@ -14,24 +19,23 @@ interface Props {
 }
 
 const Task = ({ task, handleRemoveTask, togleTaskCompletion }: Props) => {
-    
+
     return (
         <View style = {styles.taskContainer}>
-            <BouncyCheckbox 
-                style = {styles.taskText}
-                size = {20}
-                fillColor = {task.completed ? '#5E60CE' : 'transparent'}
-                isChecked = {task.completed}
-                iconStyle = {{
-                    borderWidth: task.completed ? 0 : 2, 
-                    borderColor: '#4EA8DE'
-                }}
-                text = {task.content}
-                textStyle = {{
-                    color: task.completed ? '#808080' : '#F2F2F2'
-                }}
-                onPress = { () => togleTaskCompletion(task.id) }
-            />
+            
+            <TouchableWithoutFeedback onPress = {() => togleTaskCompletion(task.id)}>
+                <View style = {styles.taskTextContainer}>
+                    <View style = {task.completed ? styles.iconContainerCompletedTask : styles.iconContainer}>
+                        { task.completed &&
+                            <IconFA name = 'check' size = {13} color = '#f2f2f2' style = {styles.taskIcon}/>
+                        }
+                    </View>
+
+                    <View style = {styles.taskContentContainer}>
+                        <Text style = {task.completed ? styles.taskTextCompletedTask : styles.taskText}> {task.content } </Text>
+                    </View>
+                </View>
+            </TouchableWithoutFeedback>
 
             <TouchableWithoutFeedback onPress = {() => handleRemoveTask(task.id)}>
                 <Icon name = 'trash' size = {23} color = '#808080'/>

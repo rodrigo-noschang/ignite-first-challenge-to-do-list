@@ -26,16 +26,23 @@ const Home = () => {
         setTasks(updatedTasks);
     }
 
+    const sortTasksByCompletion = () => {
+        const sortedTasks = [...tasks];
+        sortedTasks.sort((a, b) => Number(a.completed) - Number(b.completed));
+
+        return sortedTasks;
+    }
+
     const togleTaskCompletion = (taskId: number) => {
         const selectedTask = tasks.find(task => task.id === taskId );
-
         if (!selectedTask) return;
         
         const currentTaskState = selectedTask.completed;
-        
-        selectedTask.completed = !currentTaskState
 
-        setTasks([...tasks]);
+        selectedTask.completed = !currentTaskState
+        const sortedTasksByCompletion = sortTasksByCompletion();
+
+        setTasks(sortedTasksByCompletion);
     }
 
     return (
