@@ -8,10 +8,14 @@ export const styles = StyleSheet.create({
     },
 
     tasksCounterContainer: {
-        paddingHorizontal: 20,
+        marginHorizontal: 20,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 35
+        marginTop: 35,
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomStyle: 'solid',
+        borderBottomColor: '#808080',
+        paddingBottom: 20
     },
 
     taskListContainer: {

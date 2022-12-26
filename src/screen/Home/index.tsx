@@ -7,6 +7,7 @@ import Header from "../../components/Header";
 import Input from '../../components/Input';
 import TaskCounter from '../../components/TaskCounter';
 import Task from '../../components/Task';
+import EmptyList from '../../components/EmptyList';
 
 export type TaskType = {
     id: number,
@@ -64,6 +65,11 @@ const Home = () => {
                 />
             </View>
 
+            { tasks.length === 0 ?
+            <EmptyList />
+            
+            :
+
             <View style = {styles.taskListContainer}>
                 <ScrollView>
                     { tasks.map((task, index) => 
@@ -76,6 +82,7 @@ const Home = () => {
                     )}
                 </ScrollView>
             </View>
+            }
 
         </View>
 
