@@ -1,4 +1,4 @@
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Alert } from 'react-native';
 import { useState } from 'react';
 
 import { styles } from './style';
@@ -8,6 +8,7 @@ import Input from '../../components/Input';
 import TaskCounter from '../../components/TaskCounter';
 import Task from '../../components/Task';
 import EmptyList from '../../components/EmptyList';
+import ActionButton from '../../components/ActionButton';
 
 export type TaskType = {
     id: number,
@@ -21,10 +22,25 @@ const Home = () => {
         return curr.completed ? acc + 1 : acc + 0
     }, 0);
 
-    const handleRemoveTask = (idToRemove: number) => {
+    const removeTask = (idToRemove: number) => {
         const updatedTasks = tasks.filter(task => task.id !== idToRemove)
 
         setTasks(updatedTasks);
+    }
+
+    const handleRemoveTask = (idToRemove: number) => {
+        const task = tasks.find(task => task.id === idToRemove);
+        if (!task) return;
+        
+        Alert.alert('Remover Tarefa', `Deseja remover tarefa ${task.content}?`, [
+            {
+                text: 'Sim',
+                onPress: () => removeTask(idToRemove)
+            },
+            {
+                text: 'Não'
+            }
+        ]);
     }
 
     const sortTasksByCompletion = () => {
@@ -44,6 +60,43 @@ const Home = () => {
         const sortedTasksByCompletion = sortTasksByCompletion();
 
         setTasks(sortedTasksByCompletion);
+    }
+
+    const concludeAllTasks = () => {
+        const concludedTasks = tasks.map(task => {
+            task.completed = true;
+            return task
+        })
+
+        setTasks(concludedTasks);
+    }
+
+    const handleConcludeAllTasks = () => {
+        Alert.alert('Concluir Tarefas', 'Deseja mesmo concluir todas as tarefas?', [
+            {
+                text: 'Sim',
+                onPress: concludeAllTasks
+            },
+            {
+                text: 'Cancelar'
+            }
+        ]) 
+    }
+
+    const deleteAll = () => {
+        setTasks([]);
+    }
+
+    const handleDeleteAll = () => {
+        Alert.alert('Deletar Todas', 'Deseja mesmo deletar todas as tarefas?', [
+            {
+                text: 'Sim',
+                onPress: deleteAll
+            },
+            {
+                text: 'Cancelar'
+            }
+        ])
     }
 
     return (
@@ -71,6 +124,16 @@ const Home = () => {
             :
 
             <View style = {styles.taskListContainer}>
+                <View style = {styles.tasksEditorContianer}>
+                    <ActionButton borderColor = '#4EA8DE' action = {handleDeleteAll}>
+                        Deletar Todas
+                    </ActionButton>
+
+                    <ActionButton borderColor = '#8284FA' action = {handleConcludeAllTasks}>
+                        Concluir Todas
+                    </ActionButton>
+                </View>
+
                 <ScrollView>
                     { tasks.map((task, index) => 
                         <Task 

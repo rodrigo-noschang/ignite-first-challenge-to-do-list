@@ -12,10 +12,12 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 35,
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomStyle: 'solid',
-        borderBottomColor: '#808080',
-        paddingBottom: 20
+    },
+
+    tasksEditorContianer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 30
     },
 
     taskListContainer: {
@@ -23,4 +25,6 @@ export const styles = StyleSheet.create({
         marginTop: 20,
         flex: .95
     }
+
+
 })
